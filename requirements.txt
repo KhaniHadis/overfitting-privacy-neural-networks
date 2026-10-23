@@ -1,0 +1,11 @@
+# Versions used to produce the results in this repository (CPU run, Python 3.11)
+torch==2.2.2
+torchvision==0.17.2
+opacus==1.4.1
+numpy==1.26.4      # torch 2.2.x is not compatible with NumPy 2
+pandas
+matplotlib
+scikit-learn
+scipy
+ipykernel
+jupyter
