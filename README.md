@@ -12,16 +12,15 @@ This project studies how overfitting relates to the vulnerability of neural netw
 2. Can differential privacy reduce the effectiveness of membership inference attacks?
 3. What is the trade-off between predictive performance and privacy protection?
 
-## Repository status
+## Repository contents
 
-| Notebook | Status | Content |
-|---|---|---|
-| `notebooks/01_baseline_model.ipynb` | done | baseline training (3 seeds), generalization gap, loss-based MIA, overfitting-vs-MIA experiment |
-| `notebooks/02_overfitting_experiments.ipynb` | planned | currently covered by Sections 8 and 10 of notebook 01 |
-| `notebooks/03_membership_inference.ipynb` | planned | currently covered by Sections 9 to 11 of notebook 01 |
-| `notebooks/04_differential_privacy.ipynb` | done | DP-SGD sweep (epsilon 1, 2, 4, 8; 3 seeds), baseline-vs-DP comparison |
+| File | Content |
+|---|---|
+| `01_baseline_model.ipynb` | Baseline training (3 seeds), generalization gap, loss-based membership inference attack, overfitting-vs-MIA experiment |
+| `02_differential_privacy.ipynb` | DP-SGD sweep (epsilon 1, 2, 4, 8; 3 seeds), baseline-vs-DP comparison with the same attack protocol |
+| `requirements.txt` | Package versions used for the results |
 
-The `src/` modules (`models.py`, `train.py`, `attacks.py`, `privacy.py`) are planned; at the moment the code lives in the notebooks.
+Running the notebooks creates the folders `data/` (Fashion-MNIST, downloaded automatically) and `results/` (`metrics/`, `figures/`, `checkpoints/`) next to the notebooks.
 
 ## How to run
 
@@ -32,7 +31,7 @@ pip install -r requirements.txt
 jupyter lab
 ```
 
-Run the notebooks **in this order**: `01_baseline_model.ipynb` first, then `04_differential_privacy.ipynb`. Notebook 01 saves the data split, the configuration, the baseline checkpoints and the metrics that notebook 04 reads (`results/metrics/`, `results/checkpoints/`). Fashion-MNIST is downloaded automatically into `data/`. The notebooks run on CPU; the DP sweep (4 epsilons x 3 seeds x 30 epochs) is the slowest part. Set `DP_SEEDS = TRAIN_SEEDS[:1]` in notebook 04 to shorten it.
+Run the notebooks **in this order**: `01_baseline_model.ipynb` first, then `02_differential_privacy.ipynb`. Notebook 01 saves the data split, the configuration, the baseline checkpoints and the metrics that notebook 02 reads. The notebooks run on CPU; the DP sweep (4 epsilons x 3 seeds x 30 epochs) is the slowest part. Set `DP_SEEDS = TRAIN_SEEDS[:1]` in notebook 02 to shorten it.
 
 ## Experimental protocol
 
@@ -55,7 +54,6 @@ Run the notebooks **in this order**: `01_baseline_model.ipynb` first, then `04_d
 | 30 | 0.0632 | 0.5262 |
 
 The attack AUC increases together with the generalization gap (Pearson 0.984, Spearman 0.944 over 12 checkpoint/seed points). These points are snapshots of the same three runs, so this is a descriptive association, not a significance test or evidence of causation.
-
 
 ### Baseline vs. DP-SGD
 
@@ -82,3 +80,17 @@ What the results show, and what they do not:
 - Opacus ran without secure randomness; this is a research setup, not a production privacy implementation.
 - The reported epsilon is the measured value after training and can be slightly above the target (e.g. 8.007 for target 8). Recomputing it with a wider grid of RDP orders gave the same values.
 
+## Planned work
+
+- Move shared code (model, attack functions, training loop) into a `src/` package.
+- Evaluate stronger membership inference attacks.
+- Add a control experiment to explain why the DP AUC does not change with epsilon.
+
+## References
+
+- Shokri et al. (2017). *Membership Inference Attacks Against Machine Learning Models.* arXiv:1610.05820
+- Yeom et al. (2018). *Privacy Risk in Machine Learning: Analyzing the Connection to Overfitting.* arXiv:1709.01604
+- Abadi et al. (2016). *Deep Learning with Differential Privacy.* arXiv:1607.00133
+- Carlini et al. (2022). *Membership Inference Attacks From First Principles.* arXiv:2112.03570
+- Yousefpour et al. (2021). *Opacus: User-Friendly Differential Privacy Library in PyTorch.* arXiv:2109.12298
+- Xiao et al. (2017). *Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms.* arXiv:1708.07747
