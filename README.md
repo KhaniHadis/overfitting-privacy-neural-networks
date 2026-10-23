@@ -67,8 +67,6 @@ The attack AUC increases together with the generalization gap (Pearson 0.984, Sp
 | DP-SGD, epsilon = 2 | 82.58% | 0.0078 | 0.5085 | 0.0102 | 0.0183 |
 | DP-SGD, epsilon = 1 | 81.70% | 0.0067 | 0.5084 | 0.0109 | 0.0188 |
 
-![Baseline vs DP trade-off](results/figures/baseline_vs_dp_tradeoff.png)
-
 What the results show, and what they do not:
 
 - DP-SGD costs accuracy (5.5 points at epsilon = 8, 7.2 points at epsilon = 1) and almost removes the generalization gap.
@@ -84,6 +82,3 @@ What the results show, and what they do not:
 - Opacus ran without secure randomness; this is a research setup, not a production privacy implementation.
 - The reported epsilon is the measured value after training and can be slightly above the target (e.g. 8.007 for target 8). Recomputing it with a wider grid of RDP orders gave the same values.
 
-## References
-
-See [`references/papers.md`](references/papers.md).
