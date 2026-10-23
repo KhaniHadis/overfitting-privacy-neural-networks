@@ -56,7 +56,6 @@ Run the notebooks **in this order**: `01_baseline_model.ipynb` first, then `04_d
 
 The attack AUC increases together with the generalization gap (Pearson 0.984, Spearman 0.944 over 12 checkpoint/seed points). These points are snapshots of the same three runs, so this is a descriptive association, not a significance test or evidence of causation.
 
-![Overfitting vs MIA](results/figures/overfitting_vs_mia.png)
 
 ### Baseline vs. DP-SGD
 
